@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://b280xjvysm2jv"]
+
+[ext_resource type="Script" path="res://Scripts/Buildings/BuildingManager.gd" id="1_4n780"]
+[ext_resource type="Script" path="res://Scripts/Buildings/BuildingResource.gd" id="2_ns04x"]
+[ext_resource type="Script" path="res://Scripts/Cards/CardManager.gd" id="2_q4c06"]
+[ext_resource type="Script" path="res://Scripts/Cards/CardResource.gd" id="3_jlh72"]
+[ext_resource type="Script" path="res://Scripts/EffectManager.gd" id="5_7jsqj"]
+
+[sub_resource type="Resource" id="Resource_q7qjf"]
+script = ExtResource("2_ns04x")
+health = 0
+onBuild = ""
+onDestroy = ""
+onUpgrade = ""
+onTarget = ""
+onTurn = ""
+onHealthChange = ""
+
+[sub_resource type="Resource" id="Resource_knwbh"]
+script = ExtResource("3_jlh72")
+name = ""
+delay = 0
+type = 0
+onCast = "resolve = false"
+onResolve = ""
+onDiscard = ""
+onDraw = ""
+cardTargets = 0
+playerTargets = 0
+minTargets = 0
+maxTargets = 0
+
+[node name="MainScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("EffectManager")]
+script = ExtResource("1_4n780")
+AllBase = Array[ExtResource("2_ns04x")]([SubResource("Resource_q7qjf")])
+EffectManager = NodePath("../EffectManager")
+
+[node name="CardManager" type="Node" parent="." node_paths=PackedStringArray("EffectManager")]
+script = ExtResource("2_q4c06")
+AllBase = Array[ExtResource("3_jlh72")]([SubResource("Resource_knwbh")])
+EffectManager = NodePath("../EffectManager")
+
+[node name="EffectManager" type="Node" parent="."]
+script = ExtResource("5_7jsqj")
