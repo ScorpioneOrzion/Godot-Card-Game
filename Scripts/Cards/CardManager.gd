@@ -2,7 +2,7 @@ extends Node
 class_name CardManager
 
 @export var AllBase: Array[CardResource] = []
-@export var EffectManager: EffectManager
+@export var Effect_Manager: EffectManager
 
 func get_by_name(card_name: String) -> CardResource:
 	for card in AllBase:
@@ -11,4 +11,4 @@ func get_by_name(card_name: String) -> CardResource:
 	return null # Return null if no match is found
 
 func _ready():
-	AllBase.all(EffectManager.generate_func)
+	AllBase.all(Effect_Manager.setCardFunc)

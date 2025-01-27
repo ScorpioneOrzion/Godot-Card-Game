@@ -21,7 +21,7 @@ script = ExtResource("3_jlh72")
 name = ""
 delay = 0
 type = 0
-onCast = "resolve = false"
+onCast = "resource.resolve = false"
 onResolve = ""
 onDiscard = ""
 onDraw = ""
@@ -39,15 +39,15 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("EffectManager")]
+[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("Effect_Manager")]
 script = ExtResource("1_4n780")
 AllBase = Array[ExtResource("2_ns04x")]([SubResource("Resource_q7qjf")])
-EffectManager = NodePath("../EffectManager")
+Effect_Manager = NodePath("../EffectManager")
 
-[node name="CardManager" type="Node" parent="." node_paths=PackedStringArray("EffectManager")]
+[node name="CardManager" type="Node" parent="." node_paths=PackedStringArray("Effect_Manager")]
 script = ExtResource("2_q4c06")
 AllBase = Array[ExtResource("3_jlh72")]([SubResource("Resource_knwbh")])
-EffectManager = NodePath("../EffectManager")
+Effect_Manager = NodePath("../EffectManager")
 
 [node name="EffectManager" type="Node" parent="."]
 script = ExtResource("5_7jsqj")
