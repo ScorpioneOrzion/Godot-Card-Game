@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b280xjvysm2jv"]
+[gd_scene load_steps=10 format=3 uid="uid://b280xjvysm2jv"]
 
 [ext_resource type="Script" path="res://Scripts/Buildings/BuildingManager.gd" id="1_4n780"]
 [ext_resource type="Script" path="res://Scripts/Buildings/BuildingResource.gd" id="2_ns04x"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/Cards/CardResource.gd" id="3_jlh72"]
 [ext_resource type="Script" path="res://Scripts/EffectManager.gd" id="5_7jsqj"]
 [ext_resource type="Script" path="res://Scripts/Players/PlayerManager.gd" id="6_hmjns"]
+[ext_resource type="Script" path="res://Scripts/Players/Global.gd" id="7_aab82"]
 
 [sub_resource type="Resource" id="Resource_q7qjf"]
 script = ExtResource("2_ns04x")
@@ -19,10 +20,10 @@ onHealthChange = ""
 
 [sub_resource type="Resource" id="Resource_knwbh"]
 script = ExtResource("3_jlh72")
-name = ""
-delay = 0
-type = 0
-onCast = "resource.card.resolve = false"
+name = "globalReset"
+delay = 1
+type = 1
+onCast = ""
 onResolve = ""
 onDiscard = ""
 onDraw = ""
@@ -56,3 +57,7 @@ script = ExtResource("5_7jsqj")
 
 [node name="PlayerManager" type="Node" parent="."]
 script = ExtResource("6_hmjns")
+
+[node name="Global" type="Node" parent="." node_paths=PackedStringArray("cardManager")]
+script = ExtResource("7_aab82")
+cardManager = NodePath("../CardManager")
