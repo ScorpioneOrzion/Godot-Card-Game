@@ -1,37 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://b280xjvysm2jv"]
+[gd_scene load_steps=2 format=3 uid="uid://b280xjvysm2jv"]
 
-[ext_resource type="Script" path="res://Scripts/Buildings/BuildingManager.gd" id="1_4n780"]
-[ext_resource type="Script" path="res://Scripts/Buildings/BuildingResource.gd" id="2_ns04x"]
-[ext_resource type="Script" path="res://Scripts/Cards/CardManager.gd" id="2_q4c06"]
-[ext_resource type="Script" path="res://Scripts/Cards/CardResource.gd" id="3_jlh72"]
-[ext_resource type="Script" path="res://Scripts/EffectManager.gd" id="5_7jsqj"]
 [ext_resource type="Script" path="res://Scripts/Players/PlayerManager.gd" id="6_hmjns"]
-[ext_resource type="Script" path="res://Scripts/Players/Global.gd" id="7_aab82"]
-
-[sub_resource type="Resource" id="Resource_q7qjf"]
-script = ExtResource("2_ns04x")
-health = 0
-onBuild = ""
-onDestroy = ""
-onUpgrade = ""
-onTarget = ""
-onTurn = ""
-onHealthChange = ""
-
-[sub_resource type="Resource" id="Resource_knwbh"]
-script = ExtResource("3_jlh72")
-name = "globalReset"
-delay = 1
-type = 1
-onCast = ""
-onResolve = ""
-onDiscard = ""
-onDraw = ""
-onTurn = ""
-cardTargets = 0
-playerTargets = 0
-minTargets = 0
-maxTargets = 0
 
 [node name="MainScreen" type="Control"]
 layout_mode = 3
@@ -42,22 +11,5 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="BuildingManager" type="Node" parent="." node_paths=PackedStringArray("Effect_Manager")]
-script = ExtResource("1_4n780")
-AllBase = Array[ExtResource("2_ns04x")]([SubResource("Resource_q7qjf")])
-Effect_Manager = NodePath("../EffectManager")
-
-[node name="CardManager" type="Node" parent="." node_paths=PackedStringArray("Effect_Manager")]
-script = ExtResource("2_q4c06")
-AllBase = Array[ExtResource("3_jlh72")]([SubResource("Resource_knwbh")])
-Effect_Manager = NodePath("../EffectManager")
-
-[node name="EffectManager" type="Node" parent="."]
-script = ExtResource("5_7jsqj")
-
 [node name="PlayerManager" type="Node" parent="."]
 script = ExtResource("6_hmjns")
-
-[node name="Global" type="Node" parent="." node_paths=PackedStringArray("cardManager")]
-script = ExtResource("7_aab82")
-cardManager = NodePath("../CardManager")

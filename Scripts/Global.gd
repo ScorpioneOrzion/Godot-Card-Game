@@ -1,15 +1,15 @@
 extends Node
-class_name Global
 
-@export var cardManager: CardManager
 var players: Array[Player] = []
 var currentPlayer: int = 0
-var globalDeck: Array[UiCard] = []
-var globalDiscard: Array[UiCard] = []
+var globalDeck: Array[BaseCard] = []
+var globalDiscard: Array[BaseCard] = []
+var cardDataBase: Dictionary = {}
+var buildingDataBase: Dictionary = {}
 
 func draw():
 	if globalDeck.size() == 0:
-		cardManager.get_by_name("")
+		# cardManager.get_by_name("")
 		shuffle()
 	
 	var card = globalDeck.pop_front()
@@ -21,3 +21,7 @@ func shuffle():
 		globalDeck.push_back(card)
 	globalDiscard.clear()
 	globalDeck.shuffle()
+
+func _ready():
+	var test = test_child.new()
+	test.run()
