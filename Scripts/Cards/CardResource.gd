@@ -10,6 +10,7 @@ class_name CardResource
 @export_multiline var onResolve: String = "" # Function to be called when the card resolves (in the form of a string)
 @export_multiline var onDiscard: String = "" # Function to be called when the card is discarded (in the form of a string)
 @export_multiline var onDraw: String = "" # Function to be called when the card is drawn (in the form of a string)
+@export_multiline var onTurn: String = "" # Function to be called at the start of the player's turn (in the form of a string)
 
 @export_group("Target")
 @export_flags("Card", "Building", "Player", "Resource") var cardTargets = 0
@@ -18,11 +19,11 @@ class_name CardResource
 @export var minTargets: int = 0
 @export var maxTargets: int = 0 # -1 for infinite
 
-var resolve = true # If true, the card can resolve when totalTimeLeft is 0
-var totalTimeLeft = 0 # The total time left for the card to resolve (set at delay when played)
+var resolve = true
+var totalTimeLeft = 0
 
-# Functions to be called when the card is played, resolved, discarded, or drawn
 var onCastFunc: Callable
 var onResolveFunc: Callable
 var onDiscardFunc: Callable
 var onDrawFunc: Callable
+var onTurnFunc: Callable

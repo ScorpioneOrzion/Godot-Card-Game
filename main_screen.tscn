@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b280xjvysm2jv"]
+[gd_scene load_steps=9 format=3 uid="uid://b280xjvysm2jv"]
 
 [ext_resource type="Script" path="res://Scripts/Buildings/BuildingManager.gd" id="1_4n780"]
 [ext_resource type="Script" path="res://Scripts/Buildings/BuildingResource.gd" id="2_ns04x"]
 [ext_resource type="Script" path="res://Scripts/Cards/CardManager.gd" id="2_q4c06"]
 [ext_resource type="Script" path="res://Scripts/Cards/CardResource.gd" id="3_jlh72"]
 [ext_resource type="Script" path="res://Scripts/EffectManager.gd" id="5_7jsqj"]
+[ext_resource type="Script" path="res://Scripts/Players/PlayerManager.gd" id="6_hmjns"]
 
 [sub_resource type="Resource" id="Resource_q7qjf"]
 script = ExtResource("2_ns04x")
@@ -21,10 +22,11 @@ script = ExtResource("3_jlh72")
 name = ""
 delay = 0
 type = 0
-onCast = "resource.resolve = false"
+onCast = "resource.card.resolve = false"
 onResolve = ""
 onDiscard = ""
 onDraw = ""
+onTurn = ""
 cardTargets = 0
 playerTargets = 0
 minTargets = 0
@@ -51,3 +53,6 @@ Effect_Manager = NodePath("../EffectManager")
 
 [node name="EffectManager" type="Node" parent="."]
 script = ExtResource("5_7jsqj")
+
+[node name="PlayerManager" type="Node" parent="."]
+script = ExtResource("6_hmjns")

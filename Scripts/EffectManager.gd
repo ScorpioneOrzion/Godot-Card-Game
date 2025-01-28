@@ -2,20 +2,23 @@ extends Node
 class_name EffectManager
 
 func setCardFunc(card: CardResource) -> void:
-	var source_code: String = """func nullFunc(_a: GameResource, _b: Array[Node], _c: int, _d: Array[GameElement]) -> void:
+	var source_code: String = """func nullFunc(_a: GameElement, _b: Array[Node], _c: int, _d: Array[GameElement]) -> void:
 	pass
-func onCast(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onCast(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(card.onCast) + """
-func onResolve(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onResolve(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(card.onResolve) + """
-func onDiscard(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onDiscard(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(card.onDiscard) + """
-func onDraw(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onDraw(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
-	""" + ifEmpty(card.onDraw)
+	""" + ifEmpty(card.onDraw) + """
+func onTurn(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+	nullFunc(resource, players, currentController, targets)
+	""" + ifEmpty(card.onTurn)
 	var execute_string_resource := RefCounted.new()
 	var execute_string_script := GDScript.new()
 	execute_string_script.set_source_code(source_code)
@@ -25,26 +28,27 @@ func onDraw(resource: GameResource, players: Array[Node], currentController: int
 	card.onResolveFunc = Callable(execute_string_resource, "onResolve")
 	card.onDiscardFunc = Callable(execute_string_resource, "onDiscard")
 	card.onDrawFunc = Callable(execute_string_resource, "onDraw")
+	card.onTurnFunc = Callable(execute_string_resource, "onTurn")
 
 func setBuildingFunc(building: BuildingResource) -> void:
-	var source_code: String = """func nullFunc(_a: GameResource, _b: Array[Node], _c: int, _d: Array[GameElement]) -> void:
+	var source_code: String = """func nullFunc(_a: GameElement, _b: Array[Node], _c: int, _d: Array[GameElement]) -> void:
 	pass
-func onBuild(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onBuild(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(building.onBuild) + """
-func onDestroy(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onDestroy(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(building.onDestroy) + """
-func onUpgrade(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onUpgrade(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(building.onUpgrade) + """
-func onTarget(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onTarget(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(building.onTarget) + """
-func onTurn(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onTurn(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(building.onTurn) + """
-func onHealthChange(resource: GameResource, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
+func onHealthChange(resource: GameElement, players: Array[Node], currentController: int, targets: Array[GameElement]) -> void:
 	nullFunc(resource, players, currentController, targets)
 	""" + ifEmpty(building.onHealthChange)
 	var execute_string_resource := RefCounted.new()
