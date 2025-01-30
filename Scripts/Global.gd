@@ -1,27 +1,65 @@
 extends Node
 
+enum DEFAULT_KEYS {
+	IGNORE,
+	ALWAYSRESOLVE,
+	ISCARD,
+	TARGETCOUNT,
+	TARGETTYPE,
+	TARGETGROUP,
+	DELAY
+}
+
+enum STATE_KEYS {
+	COST,
+	TIME,
+	PASS, # to check if the card can continue resolving, set every turn to false
+	DONE, # to remove it from the active cards list
+	RESOLVE,
+	VARIABLES,
+	CURRENTCONTROLLER,
+	CURRENTOWNER,
+	CURRENTTARGETS
+}
+
+# Player-related Data
 var players: Array[Player] = []
-var currentPlayer: int = 0
-var globalDeck: Array[BaseCard] = []
-var globalDiscard: Array[BaseCard] = []
-var cardDataBase: Dictionary = {}
-var buildingDataBase: Dictionary = {}
+var current_player_index: int = 0
 
-func draw():
-	if globalDeck.size() == 0:
-		# cardManager.get_by_name("")
-		shuffle()
+# Global Deck/Graveyard
+var global_deck: Array[BaseCard] = []
+var global_graveyard: Array[BaseCard] = []
+
+# Game Databases
+var card_database: Dictionary = {}
+var building_database: Dictionary = {}
+
+var active_cards: Array[BaseCard] = []
+
+func game_start():
+	for card in global_deck:
+		card.STATE[STATE_KEYS.CURRENTOWNER] = -1 # -1 means it's in the global deck
+
+func turn_begin_step():
+	for i in range(active_cards.size() - 1, -1, -1):
+		active_cards[i].on_begin_of_turn()
+	active_cards = active_cards.filter(func(x): return x.STATE[STATE_KEYS.DONE] == false)
+
+func turn_end_step():
+	for i in range(active_cards.size() - 1, -1, -1):
+		active_cards[i].on_end_of_turn()
 	
-	var card = globalDeck.pop_front()
-	globalDiscard.push_back(card)
-	card.onDrawFunc.call(card, players, currentPlayer, [])
 
-func shuffle():
-	for card in globalDiscard:
-		globalDeck.push_back(card)
-	globalDiscard.clear()
-	globalDeck.shuffle()
+func draw_global():
+	if global_deck.size() == 0:
+		# cardManager.get_by_name("")
+		shuffle_global()
+	
+	var card = global_deck.pop_front()
+	card.on_cast()
 
-func _ready():
-	var test = test_child.new()
-	test.run()
+func shuffle_global():
+	for card in global_graveyard:
+		global_deck.push_back(card)
+	global_graveyard.clear()
+	global_deck.shuffle()

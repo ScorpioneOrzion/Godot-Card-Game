@@ -2,25 +2,35 @@ extends GameResource
 
 class_name BaseCard
 
-const NAME = "Base Card"
-func get_description():
-	return "This is a base card"
-const IGNORE = false
-const ALWAYSRESOLVE = false
-const ISCARD = true # false for effects
-const TARGETCOUNT = 0 # 0 for all targets (does not target self, nor target at all)
-const TARGETTYPE = TargetType.SELF
-const TARGETGROUP = TargetGroup.PLAYER
+var DEFAULT_KEYS = Global.DEFAULT_KEYS
+var STATE_KEYS = Global.STATE_KEYS
 
-var cost = 0
-var time = 0
-var delay = 0
-var resolve = false
-var variables: Dictionary = {}
-var currentController = -1
-var currentOwner = -1
-var currentTargets = []
-var selfTargets = []
+var DEFAULTS = {
+	DEFAULT_KEYS.IGNORE: false,
+	DEFAULT_KEYS.ALWAYSRESOLVE: false,
+	DEFAULT_KEYS.ISCARD: true,
+	DEFAULT_KEYS.TARGETCOUNT: 0,
+	DEFAULT_KEYS.TARGETTYPE: TargetType.SELF,
+	DEFAULT_KEYS.TARGETGROUP: TargetGroup.PLAYER,
+	DEFAULT_KEYS.DELAY: 0
+}
+
+var STATE := {
+	STATE_KEYS.COST: 0,
+	STATE_KEYS.TIME: 0,
+	STATE_KEYS.RESOLVE: false,
+	STATE_KEYS.PASS: false,
+	STATE_KEYS.DONE: false,
+	STATE_KEYS.VARIABLES: [],
+	STATE_KEYS.CURRENTCONTROLLER: -1,
+	STATE_KEYS.CURRENTOWNER: -1,
+	STATE_KEYS.CURRENTTARGETS: [],
+}
+
+func get_game_name():
+	return "Base Card"
+func get_game_description():
+	return "This is a base card"
 
 enum TargetType {
 	SELF,
@@ -36,65 +46,52 @@ enum TargetGroup {
 
 func clone():
 	var newCard: BaseCard = self.duplicate()
-	newCard.currentController = -1
-	newCard.currentOwner = -1
-	newCard.currentTargets = []
-	newCard.cost = cost
-	newCard.time = time
-	newCard.delay = delay
-	newCard.resolve = resolve
-	newCard.variables = variables.duplicate()
+	newCard.STATE = STATE.duplicate(true)
 
 	return newCard
 
-func reset():
-	currentTargets = []
-	resolve = false
-	time = 0
-	currentController = -1
+func clear_state():
+	STATE[STATE_KEYS.CURRENTCONTROLLER] = -1
+	STATE[STATE_KEYS.CURRENTTARGETS] = []
+	STATE[STATE_KEYS.RESOLVE] = false
+	STATE[STATE_KEYS.TIME] = 0
 
 func on_cast():
-	if TARGETCOUNT > 0 and currentTargets.size() != TARGETCOUNT:
+	if DEFAULTS[DEFAULT_KEYS.TARGETCOUNT] > 0 and STATE[STATE_KEYS.CURRENTTARGETS].size() != DEFAULTS[DEFAULT_KEYS.TARGETCOUNT]:
 		return false
-	resolve = true
-	time = delay
-	currentController = currentOwner
+	STATE[STATE_KEYS.RESOLVE] = true
+	STATE[STATE_KEYS.TIME] = DEFAULTS[DEFAULT_KEYS.DELAY]
+	STATE[STATE_KEYS.CURRENTOWNER] = STATE[STATE_KEYS.CURRENTCONTROLLER]
 	return true
 
 func resolve_card():
-	if resolve or ALWAYSRESOLVE:
+	if STATE[STATE_KEYS.RESOLVE] or DEFAULTS[DEFAULT_KEYS.ALWAYSRESOLVE]:
 		self.on_resolve()
-		self.on_discard()
+	STATE[STATE_KEYS.DONE] = true
 
 func on_resolve():
 	pass
 
 func on_discard():
-	if currentOwner != -1:
-		var player = Global.players[currentOwner]
-		player.G.append(player.H.pop_at(player.H.find(self)))
-		reset()
+	pass
 
 func on_draw():
-	if currentOwner != -1:
-		var player = Global.players[currentOwner]
-		player.H.append(player.D.pop_at(player.D.find(self)))
-		reset()
+	pass
 
 func on_begin_of_turn():
 	pass
 
-var doneEndOfTurn = false
 func on_end_of_turn():
-	if doneEndOfTurn:
+	if STATE[STATE_KEYS.PASS]:
+		STATE[STATE_KEYS.PASS] = false
 		return
-
-	if currentTargets.empty() or IGNORE == true:
-		time -= 1
-		if time == 0:
-			on_resolve()
 	
-	doneEndOfTurn = true
+	if STATE[STATE_KEYS.CURRENTTARGETS].empty() or DEFAULTS[DEFAULT_KEYS.IGNORE] == true:
+		STATE[STATE_KEYS.TIME] -= 1
+		
+		if STATE[STATE_KEYS.TIME] <= 0:
+			resolve_card()
+			clear_state()
 
 func _ready():
-	Global.cardDataBase[NAME] = self
+	Global.cardDataBase[self.get_game_name()] = self
