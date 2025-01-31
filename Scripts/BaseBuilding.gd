@@ -1,10 +1,26 @@
 extends GameResource
-
 class_name BaseBuilding
 
-var name = "Base Building"
-var description = "This is a base building"
-var health = 0
+func has_flag(flag: FLAGS):
+	return DEFAULTS[KEYS.FLAGS].contains(flag)
+
+var DEFAULTS = {
+	KEYS.UPGRADE: [],
+	KEYS.FLAGS: [],
+}
+
+var STATE := {
+	KEYS.CURRENTCONTROLLER: -1,
+	KEYS.CURRENTHEALTH: 0,
+	KEYS.MAXHEALTH: 0,
+	KEYS.VARIABLES: []
+}
+
+func get_game_name():
+	return "Base Building"
+
+func get_game_description():
+	return "This is a base building"
 
 func on_build():
 	pass
@@ -19,7 +35,5 @@ func on_turn():
 func on_health_change():
 	pass
 
-var variables: Dictionary = {}
-
 func _ready():
-	Global.buildingDataBase[name] = self
+	Global.building_database.append(self)
