@@ -1,11 +1,10 @@
 extends Node
 class_name Player
 
-var PLAYER_DECK: Array[BaseCard] = []
-var PLAYER_HAND: Array[BaseCard] = []
-var PLAYER_GRAVEYARD: Array[BaseCard] = []
-var PLAYER_BUILDINGS: Array[BaseBuilding] = []
-var ownIndex: int
+var ALL_CARDS: Array[BaseCard] = []
+var ALL_BUILDINGS: Array[BaseBuilding] = []
 
-func defeat():
-	pass
+var deck: Array[BaseCard] = []
+var hand: Array[BaseCard] = []
+var graveyard: Array[BaseCard] = []
+var exile: Array[BaseCard] = []

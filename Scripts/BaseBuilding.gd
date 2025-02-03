@@ -1,19 +1,29 @@
 extends GameResource
 class_name BaseBuilding
 
-func has_flag(flag: FLAGS):
-	return DEFAULTS[KEYS.FLAGS].contains(flag)
+var owner:
+	get:
+		return "global" if DATA[GlobalEnums.Keys.OWNER] == -1 else "player_%d" % DATA[GlobalEnums.Keys.OWNER]
+var current_zone:
+	get:
+		return DATA[GlobalEnums.Keys.ZONE]
+var attributes:
+	get:
+		return DATA[GlobalEnums.Keys.ATTRIBUTES]
+var variables:
+	get:
+		return DATA[GlobalEnums.Keys.VARIABLES]
+var flags:
+	get:
+		return DATA[GlobalEnums.Keys.FLAGS]
 
-var DEFAULTS = {
-	KEYS.UPGRADE: [],
-	KEYS.FLAGS: [],
-}
-
-var STATE := {
-	KEYS.CURRENTCONTROLLER: -1,
-	KEYS.CURRENTHEALTH: 0,
-	KEYS.MAXHEALTH: 0,
-	KEYS.VARIABLES: []
+var DATA = {
+	GlobalEnums.Keys.ATTRIBUTES: [],
+	GlobalEnums.Keys.VARIABLES: [],
+	GlobalEnums.Keys.OWNER: - 1,
+	GlobalEnums.Keys.FLAGS: [],
+	GlobalEnums.Keys.HEALTH: 0,
+	GlobalEnums.Keys.MAXHEALTH: 0,
 }
 
 func get_game_name():
@@ -24,14 +34,19 @@ func get_game_description():
 
 func on_build():
 	pass
+
 func on_destroy():
 	pass
+
 func on_upgrade():
 	pass
+
 func on_target():
 	pass
+
 func on_turn():
 	pass
+
 func on_health_change():
 	pass
 
