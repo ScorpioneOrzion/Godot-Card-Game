@@ -36,7 +36,7 @@ enum Keys {
 	CURRENTTARGETS
 }
 
-enum Flags {
+enum Attributes {
 	CAPITAL,
 }
 

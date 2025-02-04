@@ -1,35 +1,42 @@
 extends GameResource
 class_name BaseCard
 
-var owner:
+var owner: String:
 	get:
 		return "global" if DATA[GlobalEnums.Keys.OWNER] == -1 else "player_%d" % DATA[GlobalEnums.Keys.OWNER]
-var current_zone:
+	set(value):
+		if value == "global":
+			DATA[GlobalEnums.Keys.OWNER] = -1
+		elif value.begins_with("player_"):
+			DATA[GlobalEnums.Keys.OWNER] = int(value.right(-7))
+var current_zone: GlobalEnums.Zones:
 	get:
 		return DATA[GlobalEnums.Keys.ZONE]
-var attributes:
+	set(value):
+		DATA[GlobalEnums.Keys.ZONE] = value
+var attributes: Array[GlobalEnums.Attributes]:
 	get:
 		return DATA[GlobalEnums.Keys.ATTRIBUTES]
-var variables:
+	set(value):
+		DATA[GlobalEnums.Keys.ATTRIBUTES] = value
+var variables: Array[int]:
 	get:
 		return DATA[GlobalEnums.Keys.VARIABLES]
-var flags:
-	get:
-		return DATA[GlobalEnums.Keys.FLAGS]
+	set(value):
+		DATA[GlobalEnums.Keys.VARIABLES] = value
 
 var DATA = {
 	GlobalEnums.Keys.ATTRIBUTES: [],
 	GlobalEnums.Keys.VARIABLES: [],
 	GlobalEnums.Keys.OWNER: - 1,
-	GlobalEnums.Keys.FLAGS: [],
 	GlobalEnums.Keys.ZONE: GlobalEnums.Zones.DECK,
 	GlobalEnums.Keys.TARGETCOUNT: 0,
 	GlobalEnums.Keys.TARGETTYPE: GlobalEnums.TargetType.SELF,
 	GlobalEnums.Keys.TARGETGROUP: GlobalEnums.TargetGroup.PLAYER,
-	GlobalEnums.Keys.DELAY: [],
-	GlobalEnums.Keys.COST: [],
-	GlobalEnums.Keys.TIME: [],
-	GlobalEnums.Keys.RESOLVE: [],
+	GlobalEnums.Keys.DELAY: 0,
+	GlobalEnums.Keys.COST: 0,
+	GlobalEnums.Keys.TIME: 0,
+	GlobalEnums.Keys.RESOLVE: false,
 	GlobalEnums.Keys.CURRENTTARGETS: [],
 }
 

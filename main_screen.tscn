@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b280xjvysm2jv"]
+[gd_scene load_steps=2 format=3 uid="uid://b280xjvysm2jv"]
+
+[ext_resource type="PackedScene" uid="uid://d33bdnni82uen" path="res://Ui/card.tscn" id="1_rchfy"]
 
 [node name="MainScreen" type="Control"]
 layout_mode = 3
@@ -8,3 +10,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
+metadata/_edit_horizontal_guides_ = [1082.0]
+metadata/_edit_vertical_guides_ = [1920.0]
+
+[node name="Card" parent="." instance=ExtResource("1_rchfy")]
+layout_mode = 1
+offset_left = 816.0
+offset_top = 827.0
+offset_right = -854.0
+offset_bottom = 97.0

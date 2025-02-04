@@ -20,6 +20,14 @@ config/icon="res://icon.svg"
 Global="*res://Scripts/Global.gd"
 GlobalEnums="*res://Scripts/GlobalEnums.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/size/resizable=false
+window/stretch/mode="viewport"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

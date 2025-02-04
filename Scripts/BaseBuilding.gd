@@ -1,27 +1,29 @@
 extends GameResource
 class_name BaseBuilding
 
-var owner:
+var owner: String:
 	get:
 		return "global" if DATA[GlobalEnums.Keys.OWNER] == -1 else "player_%d" % DATA[GlobalEnums.Keys.OWNER]
-var current_zone:
-	get:
-		return DATA[GlobalEnums.Keys.ZONE]
-var attributes:
+	set(value):
+		if value == "global":
+			DATA[GlobalEnums.Keys.OWNER] = -1
+		elif value.begins_with("player_"):
+			DATA[GlobalEnums.Keys.OWNER] = int(value.right(-7))
+var attributes: Array[GlobalEnums.Attributes]:
 	get:
 		return DATA[GlobalEnums.Keys.ATTRIBUTES]
-var variables:
+	set(value):
+		DATA[GlobalEnums.Keys.ATTRIBUTES] = value
+var variables: Array[int]:
 	get:
 		return DATA[GlobalEnums.Keys.VARIABLES]
-var flags:
-	get:
-		return DATA[GlobalEnums.Keys.FLAGS]
+	set(value):
+		DATA[GlobalEnums.Keys.VARIABLES] = value
 
 var DATA = {
 	GlobalEnums.Keys.ATTRIBUTES: [],
 	GlobalEnums.Keys.VARIABLES: [],
 	GlobalEnums.Keys.OWNER: - 1,
-	GlobalEnums.Keys.FLAGS: [],
 	GlobalEnums.Keys.HEALTH: 0,
 	GlobalEnums.Keys.MAXHEALTH: 0,
 }

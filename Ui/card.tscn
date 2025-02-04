@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d33bdnni82uen"]
+
+[ext_resource type="Shader" path="res://Ui/card.gdshader" id="1_efyq0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_urmji"]
+shader = ExtResource("1_efyq0")
+
+[node name="Card" type="ColorRect"]
+material = SubResource("ShaderMaterial_urmji")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1670.0
+offset_bottom = -730.0
+grow_horizontal = 2
+grow_vertical = 2
